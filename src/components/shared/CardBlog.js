@@ -10,6 +10,7 @@ import {
   Card,
   Divider,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const CardBlog = ({ title, author, image, slug }) => {
   return (
@@ -19,14 +20,22 @@ const CardBlog = ({ title, author, image, slug }) => {
         borderRadius: 3,
       }}
     >
-      <CardHeader
-        avatar={<Avatar src={author.avatar.url} />}
-        title={
-          <Typography component="p" variant="p" color="secondary.main">
-            {author.name}
-          </Typography>
-        }
-      ></CardHeader>
+      {author && (
+        <CardHeader
+          avatar={<Avatar src={author.avatar.url} />}
+          title={
+            <Typography
+              component="p"
+              variant="p"
+              color="secondary.main"
+              sx={{ textAlign: "left" }}
+            >
+              {author.name}
+            </Typography>
+          }
+        ></CardHeader>
+      )}
+
       <CardMedia component="img" image={image.url} alt={title} />
       <CardContent>
         <Typography
@@ -41,14 +50,19 @@ const CardBlog = ({ title, author, image, slug }) => {
         </Typography>
       </CardContent>
       <Divider variant="middle" sx={{ margin: "10px" }} />
-      <CardActions sx={{ justifyContent: "center", marginBottom: 1 }}>
-        <Button
-          variant="outlined"
-          size="small"
-          sx={{ borderRadius: 3, width: "100%" }}
+      <CardActions sx={{ marginBottom: 1 }}>
+        <Link
+          to={`/blogs/${slug}`}
+          style={{ width: "100%", textDecoration: "none" }}
         >
-          Read more...
-        </Button>
+          <Button
+            variant="outlined"
+            size="small"
+            sx={{ borderRadius: 3, width: "100%" }}
+          >
+            Read more...
+          </Button>
+        </Link>
       </CardActions>
     </Card>
   );

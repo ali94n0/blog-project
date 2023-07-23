@@ -2,6 +2,7 @@ import React from "react";
 import AppBar from "@mui/material/AppBar";
 import { Container, Toolbar, Typography } from "@mui/material";
 import BookRoundedIcon from "@mui/icons-material/BookRounded";
+import { Link } from "react-router-dom";
 
 function Header() {
   return (
@@ -18,7 +19,9 @@ function Header() {
             >
               React Blog Website
             </Typography>
-            <BookRoundedIcon />
+            <Link to={"/"} style={{ textDecoration: "none", color: "#fff" }}>
+              <BookRoundedIcon sx={{ textDecoration: "none" }} />
+            </Link>
           </Toolbar>
         </Container>
       </AppBar>
