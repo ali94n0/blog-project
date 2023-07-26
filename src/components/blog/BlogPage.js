@@ -1,9 +1,107 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { GET_BLOG_INFO } from "../../graphql/queries";
+import { useQuery } from "@apollo/client";
+import Loader from "../shared/Loader";
+import { Avatar, Box, Button, Divider, Grid, Typography } from "@mui/material";
+import { Container } from "@mui/system";
+import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 
 function BlogPage() {
   const { slug } = useParams();
-  return <div>{slug}</div>;
+  const { loading, data, error } = useQuery(GET_BLOG_INFO, {
+    variables: { slug },
+  });
+  const navigate = useNavigate();
+  if (loading) return <Loader />;
+  if (error) return <p>{error.message}</p>;
+  const {
+    post: { title, author, image, content, dateCreatedAt },
+  } = data;
+  return (
+    <Container maxWidth="lg">
+      <Grid container mt={10}>
+        <Grid
+          item
+          xs={12}
+          display={"flex"}
+          alignItems={"center"}
+          justifyContent={"space-between"}
+          marginBottom={3}
+        >
+          <Button
+            padding={"5px"}
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
+            <ArrowBackRoundedIcon style={{ color: "#424242" }} />
+          </Button>
+          <Typography
+            component="h1"
+            variant="h5"
+            color="primary.dark"
+            padding={2}
+            fontWeight={"bold"}
+          >
+            {title}
+          </Typography>
+        </Grid>
+        <Grid item xs={12} marginBottom={3}>
+          <img
+            src={image.url}
+            alt={title}
+            style={{ borderRadius: "10px", width: "100%" }}
+          />
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          display={"flex"}
+          alignItems={"center"}
+          justifyContent={"space-between"}
+          marginBottom={3}
+        >
+          <Box component="div" display={"flex"} alignItems={"center"}>
+            <Avatar src={author.avatar.url} sx={{ marginRight: "10px" }} />
+            <Link
+              to={`/authors/${author.slug}`}
+              style={{ textDecoration: "none", color: "#37474f" }}
+            >
+              <Box
+                component="div"
+                display={"flex"}
+                flexDirection={"column"}
+                justifyContent={"center"}
+                alignItems={"flex-start"}
+              >
+                <Typography component="p" variant="p" fontWeight={"bold"}>
+                  {author.name}
+                </Typography>
+                <Typography component="p" variant="p" fontSize={13}>
+                  {author.field}
+                </Typography>
+              </Box>
+            </Link>
+          </Box>
+          <Typography component="span" variant="p" fontSize={12}>
+            Created At: {dateCreatedAt}
+          </Typography>
+        </Grid>
+        <Grid item xs={12} marginBottom={3}>
+          <div
+            dangerouslySetInnerHTML={{ __html: content.html }}
+            style={{
+              textAlign: "left",
+              textDecoration: "none",
+              lineHeight: "30px",
+            }}
+          ></div>
+        </Grid>
+        <Divider variant="middle" />
+      </Grid>
+    </Container>
+  );
 }
 
 export default BlogPage;

@@ -3,11 +3,12 @@ import { GET_BLOGS_INFO } from "../../graphql/queries";
 import { useQuery } from "@apollo/client";
 import CardBlog from "../shared/CardBlog";
 import { Grid } from "@mui/material";
+import Loader from "../shared/Loader";
 
 function Blogs(props) {
   const { loading, data, error } = useQuery(GET_BLOGS_INFO);
   console.log({ loading, data, error });
-  if (loading) return <h4>Loading ...</h4>;
+  if (loading) return <Loader />;
   if (error) return <p>{error.message}</p>;
   return (
     <div>

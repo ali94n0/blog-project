@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 function Header() {
   return (
     <div>
-      <AppBar position="sticky">
+      <AppBar position="fixed">
         <Container maxWidth="lg">
           <Toolbar>
             <Typography

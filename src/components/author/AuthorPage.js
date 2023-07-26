@@ -2,9 +2,11 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { GET_AUTHOR_INFO } from "../../graphql/queries";
 import { useQuery } from "@apollo/client";
-import { Avatar, Container, Divider, Grid, Typography } from "@mui/material";
+import { Avatar, Divider, Grid, Typography } from "@mui/material";
+import { Container } from "@mui/system";
 import sanitizeHtml from "sanitize-html";
 import CardBlog from "../shared/CardBlog";
+import Loader from "../shared/Loader";
 
 function AuthorPage() {
   const { slug } = useParams();
@@ -12,21 +14,21 @@ function AuthorPage() {
     variables: { slug },
   });
 
-  if (loading) return <h4>Loading...</h4>;
-  if (error) return <p>something went wrong...</p>;
+  if (loading) return <Loader />;
+  if (error) return <p>{error.message}</p>;
   const {
     author: { name, field, avatar, description, posts },
   } = data;
   console.log(name);
   return (
     <Container maxWidth="lg">
-      <Grid Container>
+      <Grid Container mt={10}>
         <Grid
           item
           display={"flex"}
           flexDirection={"column"}
           alignItems={"center"}
-          marginTop={5}
+          mt={12}
           xs={12}
         >
           <Avatar src={avatar.url} sx={{ width: "150px", height: "150px" }} />
