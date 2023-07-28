@@ -6,6 +6,8 @@ import Loader from "../shared/Loader";
 import { Avatar, Box, Button, Divider, Grid, Typography } from "@mui/material";
 import { Container } from "@mui/system";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
+import CommentForm from "../comment/CommentForm";
+import Comments from "../comment/Comments";
 
 function BlogPage() {
   const { slug } = useParams();
@@ -29,14 +31,6 @@ function BlogPage() {
           justifyContent={"space-between"}
           marginBottom={3}
         >
-          <Button
-            padding={"5px"}
-            onClick={() => {
-              navigate(-1);
-            }}
-          >
-            <ArrowBackRoundedIcon style={{ color: "#424242" }} />
-          </Button>
           <Typography
             component="h1"
             variant="h5"
@@ -46,6 +40,16 @@ function BlogPage() {
           >
             {title}
           </Typography>
+          <Button
+            padding={"5px"}
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
+            <ArrowBackRoundedIcon
+              style={{ color: "#424242", rotate: "180deg" }}
+            />
+          </Button>
         </Grid>
         <Grid item xs={12} marginBottom={3}>
           <img
@@ -99,6 +103,9 @@ function BlogPage() {
           ></div>
         </Grid>
         <Divider variant="middle" />
+        <CommentForm slug={slug} />
+        <Divider variant="middle" />
+        <Comments slug={slug} />
       </Grid>
     </Container>
   );

@@ -8,13 +8,25 @@ function HomePage() {
     <Container maxWidth="lg">
       <Grid container spacing={2} padding={3} mt={10}>
         <Grid item xs={12} md={3} mt={3}>
-          <Typography component="h3" variant="h6" fontWeight="bold" mb={2}>
+          <Typography
+            component="h3"
+            variant="h6"
+            fontWeight="bold"
+            mb={2}
+            color={"primary.dark"}
+          >
             Authors:
           </Typography>
           <Authors />
         </Grid>
         <Grid item xs={12} md={9} mt={3}>
-          <Typography component="h3" variant="h6" fontWeight="bold" mb={2}>
+          <Typography
+            component="h3"
+            variant="h6"
+            fontWeight="bold"
+            mb={2}
+            color={"primary.dark"}
+          >
             Blogs:
           </Typography>
           <Blogs />
